@@ -19,7 +19,7 @@ pub fn push_initial_changes(path: String) -> Result<(), git2::Error> {
 
     let signature = repo.signature()?;
     repo.commit(
-        Some("reafs/heads/main"),
+        Some("refs/heads/main"),
         &signature,
         &signature,
         "Initial",

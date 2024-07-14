@@ -1,3 +1,5 @@
+use std::process;
+
 use clap::{Parser, Subcommand};
 use grom::commands::{diary, project, quick_note, sync};
 use grom::core::config;
@@ -45,7 +47,13 @@ enum SyncCommand {
 fn main() {
     ctrlc::set_handler(move || {}).expect("settings ctrl-c handler");
     let cli = Cli::parse();
-    let config = config::load_config();
+    let config = match config::load_config() {
+        Ok(cfg) => cfg,
+        Err(e) => {
+            cliclack::note("T_T", format!("Unable to load config: {}", e.to_string())).unwrap();
+            process::exit(1);
+        }
+    };
 
     if let Some(command) = &cli.command {
         match &command {

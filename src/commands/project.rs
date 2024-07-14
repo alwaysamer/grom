@@ -33,7 +33,7 @@ pub fn open(project_name: String, config: Config) {
     let project_base: String =
         config.core.note_dir.clone() + "/projects/" + project_name.as_str() + "/start.md";
     if utils::path_exists(project_base.clone()) {
-        match utils::open_file(config.core.open_cmd.clone(), project_base.clone()) {
+        match utils::open_file(config.core.editor.clone(), project_base.clone()) {
             Ok(_) => (),
             Err(e) => {
                 cliclack::note("T_T", format!("Unable to open file: {}", e)).unwrap();
@@ -47,7 +47,7 @@ pub fn open(project_name: String, config: Config) {
 }
 
 pub fn interative_selecion(config: Config) {
-    let open_cmd = config.core.open_cmd.clone();
+    let open_cmd = config.core.editor.clone();
     let project = match utils::select_project(config) {
         Ok(p) => p,
         Err(_e) => {

@@ -15,7 +15,7 @@ pub fn daily_diary(config: Config) {
         today.format("%m-%d-%Y")
     );
     if utils::path_exists(file.clone()) {
-        match utils::open_file(config.core.open_cmd.clone(), file.clone()) {
+        match utils::open_file(config.core.editor.clone(), file.clone()) {
             Ok(_) => process::exit(0),
             Err(e) => {
                 cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
@@ -39,7 +39,7 @@ pub fn daily_diary(config: Config) {
     }
 
     if config.core.always_open {
-        match utils::open_file(config.core.open_cmd.clone(), file.clone()) {
+        match utils::open_file(config.core.editor.clone(), file.clone()) {
             Ok(_) => process::exit(0),
             Err(e) => {
                 cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
@@ -59,7 +59,7 @@ pub fn weekly_diary(config: Config) {
         today.iso_week().week(),
     );
     if utils::path_exists(file.clone()) {
-        match utils::open_file(config.core.open_cmd.clone(), file.clone()) {
+        match utils::open_file(config.core.editor.clone(), file.clone()) {
             Ok(_) => (),
             Err(e) => {
                 cliclack::note("T_T", format!("Unable to open file: {}", e)).unwrap();
@@ -82,7 +82,7 @@ pub fn weekly_diary(config: Config) {
         }
     }
     if config.core.always_open {
-        match utils::open_file(config.core.open_cmd.clone(), file.clone()) {
+        match utils::open_file(config.core.editor.clone(), file.clone()) {
             Ok(_) => process::exit(0),
             Err(e) => {
                 cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
@@ -101,7 +101,7 @@ pub fn monthly_diary(config: Config) {
         today.format("%B"),
     );
     if utils::path_exists(file.clone()) {
-        match utils::open_file(config.core.open_cmd.clone(), file.clone()) {
+        match utils::open_file(config.core.editor.clone(), file.clone()) {
             Ok(_) => (),
             Err(e) => {
                 cliclack::note("T_T", format!("Unable to open file: {}", e)).unwrap();
@@ -124,7 +124,7 @@ pub fn monthly_diary(config: Config) {
         }
     }
     if config.core.always_open {
-        match utils::open_file(config.core.open_cmd.clone(), file.clone()) {
+        match utils::open_file(config.core.editor.clone(), file.clone()) {
             Ok(_) => process::exit(0),
             Err(e) => {
                 cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
