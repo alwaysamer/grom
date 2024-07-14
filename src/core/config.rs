@@ -11,18 +11,12 @@ fn default_editor() -> String {
     "nvim".to_string()
 }
 
-fn default_always_open() -> bool {
-    false
-}
-
 #[derive(Deserialize)]
 pub struct Core {
     #[serde(default = "default_note_dir")]
     pub note_dir: String,
     #[serde(default = "default_editor")]
     pub editor: String,
-    #[serde(default = "default_always_open")]
-    pub always_open: bool,
 }
 
 #[derive(Deserialize)]

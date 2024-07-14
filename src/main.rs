@@ -17,7 +17,10 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-    Quick {},
+    Quick {
+        #[arg(value_name = "NOTE_NAME")]
+        note_name: String,
+    },
     New {
         #[arg(value_name = "PROJECT_NAME")]
         project_name: String,
@@ -57,7 +60,7 @@ fn main() {
 
     if let Some(command) = &cli.command {
         match &command {
-            Command::Quick {} => quick_note::quick_note(config),
+            Command::Quick { note_name } => quick_note::quick_note(note_name.clone(), config),
             Command::Today {} => diary::daily_diary(config),
             Command::Week {} => diary::weekly_diary(config),
             Command::Month {} => diary::monthly_diary(config),

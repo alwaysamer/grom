@@ -38,13 +38,11 @@ pub fn daily_diary(config: Config) {
         }
     }
 
-    if config.core.always_open {
-        match utils::open_file(config.core.editor.clone(), file.clone()) {
-            Ok(_) => process::exit(0),
-            Err(e) => {
-                cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
-                process::exit(1);
-            }
+    match utils::open_file(config.core.editor.clone(), file.clone()) {
+        Ok(_) => process::exit(0),
+        Err(e) => {
+            cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
+            process::exit(1);
         }
     }
 }
@@ -81,13 +79,11 @@ pub fn weekly_diary(config: Config) {
             process::exit(0);
         }
     }
-    if config.core.always_open {
-        match utils::open_file(config.core.editor.clone(), file.clone()) {
-            Ok(_) => process::exit(0),
-            Err(e) => {
-                cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
-                process::exit(1);
-            }
+    match utils::open_file(config.core.editor.clone(), file.clone()) {
+        Ok(_) => process::exit(0),
+        Err(e) => {
+            cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
+            process::exit(1);
         }
     }
 }
@@ -123,13 +119,11 @@ pub fn monthly_diary(config: Config) {
             process::exit(1);
         }
     }
-    if config.core.always_open {
-        match utils::open_file(config.core.editor.clone(), file.clone()) {
-            Ok(_) => process::exit(0),
-            Err(e) => {
-                cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
-                process::exit(1);
-            }
+    match utils::open_file(config.core.editor.clone(), file.clone()) {
+        Ok(_) => process::exit(0),
+        Err(e) => {
+            cliclack::note("T_T", format!("Unable to open file:  {}", e)).unwrap();
+            process::exit(1);
         }
     }
 }
