@@ -1,6 +1,5 @@
 use clap::{Parser, Subcommand};
-
-use grom::commands::{diary, project, quick_note};
+use grom::commands::{diary, project, quick_note, sync};
 use grom::core::config;
 
 #[derive(Parser)]
@@ -24,6 +23,23 @@ enum Command {
     Today {},
     Week {},
     Month {},
+    Sync {
+        #[command(subcommand)]
+        command: SyncCommand,
+    },
+}
+
+#[derive(Subcommand)]
+enum SyncCommand {
+    Init {
+        #[arg(value_name = "REMOTE_URL")]
+        remote_url: String,
+    },
+    Push {
+        #[arg(value_name = "MESSAGE")]
+        message: String,
+    },
+    Pull {},
 }
 
 fn main() {
@@ -33,15 +49,22 @@ fn main() {
 
     if let Some(command) = &cli.command {
         match &command {
-            Command::Quick {} => quick_note::create_and_open_quick_note(config),
-            Command::Today {} => diary::create_or_open_daily_diary(config),
-            Command::Week {} => diary::create_or_open_weekly_diary(config),
-            Command::Month {} => diary::create_or_open_monthly_diary(config),
-            Command::New { project_name } => project::create_project(project_name.clone(), config),
+            Command::Quick {} => quick_note::quick_note(config),
+            Command::Today {} => diary::daily_diary(config),
+            Command::Week {} => diary::weekly_diary(config),
+            Command::Month {} => diary::monthly_diary(config),
+            Command::New { project_name } => project::create(project_name.clone(), config),
+            Command::Sync { command } => match command {
+                SyncCommand::Init { remote_url } => {
+                    sync::init(remote_url.clone(), config);
+                }
+                SyncCommand::Push { message } => sync::push(message.to_owned(), config),
+                SyncCommand::Pull {} => sync::pull(config),
+            },
         }
     } else if let Some(project) = &cli.project {
-        project::open_project(project.clone(), config);
+        project::open(project.clone(), config);
     } else {
-        project::interative_project_selecion(config);
+        project::interative_selecion(config);
     }
 }

@@ -3,81 +3,31 @@ use std::{
     fs::{self, OpenOptions},
     io::{self},
     path::Path,
-    process::{self, Command},
+    process::Command,
 };
 
-pub fn save_file(file: String) {
-    match OpenOptions::new()
+pub fn save_file(file: String) -> Result<(), io::Error> {
+    OpenOptions::new()
         .write(true)
         .create_new(true)
-        .open(file.clone())
-    {
-        Ok(_) => {
-            #[cfg(debug_assertions)]
-            println!("Note created successfully!");
-        }
-        Err(e) => match e.kind() {
-            _ => {
-                #[cfg(debug_assertions)]
-                println!("Error creating Note : {:?}", e);
-                process::exit(1);
-            }
-        },
-    };
+        .open(file.clone())?;
+    Ok(())
 }
 
-pub fn open_file(cmd: String, file: String) {
-    let status = Command::new(cmd).arg(file).status();
-    match status {
-        Ok(s) if s.success() => {
-            #[cfg(debug_assertions)]
-            println!("Note opened successfully!");
-            process::exit(0);
-        }
-        Ok(_s) => {
-            #[cfg(debug_assertions)]
-            eprintln!("Command couldn't open File");
-            process::exit(1);
-        }
-        Err(_e) => {
-            #[cfg(debug_assertions)]
-            eprintln!("Error executing open_cmd!");
-            process::exit(1);
-        }
-    }
+pub fn open_file(cmd: String, file: String) -> Result<(), io::Error> {
+    Command::new(cmd).arg(file).status()?;
+    Ok(())
 }
 
-pub fn ensure_all_dirs(path: String) {
+pub fn ensure_all_dirs(path: String) -> Result<(), io::Error> {
     let path = Path::new(path.as_str());
     if let Some(parent) = path.parent() {
-        if let Err(_e) = fs::create_dir_all(parent) {
-            #[cfg(debug_assertions)]
-            eprintln!("Unable to create Parent-Directories!");
-            process::exit(1);
+        match fs::create_dir_all(parent) {
+            Ok(_) => {}
+            Err(e) => return Err(e),
         }
     }
-}
-
-pub fn save_and_open_file(file: String, config: Config) {
-    match OpenOptions::new()
-        .write(true)
-        .create_new(true)
-        .open(file.clone())
-    {
-        Ok(_) => {
-            #[cfg(debug_assertions)]
-            println!("Note created successfully!");
-        }
-        Err(e) => match e.kind() {
-            _ => {
-                #[cfg(debug_assertions)]
-                println!("Error creating Note : {:?}", e);
-                process::exit(1);
-            }
-        },
-    };
-    open_file(config.core.open_cmd, file);
-    process::exit(0);
+    Ok(())
 }
 
 pub fn path_exists<P: AsRef<Path>>(path: P) -> bool {
