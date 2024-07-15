@@ -1,6 +1,6 @@
 use crate::core::config::Config;
 use crate::core::utils;
-use std::process;
+use std::{io, process};
 
 pub fn create(project_name: String, config: Config) {
     let path = config.core.note_dir.clone() + "/projects/" + project_name.as_str() + "/start.md";
@@ -50,7 +50,10 @@ pub fn interative_selecion(config: Config) {
     let open_cmd = config.core.editor.clone();
     let project = match utils::select_project(config) {
         Ok(p) => p,
-        Err(_e) => {
+        Err(e) => {
+            if e.kind() == io::ErrorKind::Interrupted {
+                process::exit(0);
+            }
             cliclack::note("-_-", "No Projects found.").unwrap();
             process::exit(1);
         }

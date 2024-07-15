@@ -81,8 +81,16 @@ pub fn select_project(config: Config) -> Result<String, io::Error> {
     for (_index, (name, path)) in projects.iter().enumerate() {
         items.push((name.clone(), path.clone(), String::from("")));
     }
-    return Ok(cliclack::select(format!("Select a Project"))
+    match cliclack::select(format!("Select a Project"))
         .items(&items)
         .interact()
-        .unwrap());
+    {
+        Ok(index) => return Ok(index),
+        Err(_) => {
+            return Err(io::Error::new(
+                ErrorKind::Interrupted,
+                "Couldn't select a project.",
+            ))
+        }
+    };
 }
