@@ -1,8 +1,7 @@
-use std::process;
-
 use crate::core::config::Config;
 use crate::core::utils;
 use chrono::{Datelike, Local};
+use std::process;
 
 pub fn daily_diary(config: Config) {
     let today = Local::now();

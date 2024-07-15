@@ -1,0 +1,7 @@
+- fixed a bug in interactive selection and refactored a bit
+- removed always_open flag and refactored quick note to take argument
+- added config default values, git integration and did some refactoring
+- added git integration and did some refactoring
+- Added readme and metadata
+- Create LICENSE
+- Initial
