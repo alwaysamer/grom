@@ -20,9 +20,9 @@ note_dir="~/notes" # defines where the notes are saved
 editor="nvim" # which editor to use to open the file. Any command is applicable (just use the actual command not an alias)
 ```
 ## Usage
-Grom proved 3 basic functionalities:
+Grom provides 3 basic functionalities:
 * Diarys (on a daily,weekly and monthly basis)
-* Projects (Creating Projects and making project-specific notes)
+* Projects (Creating and opening Projects)
 * Syncing via Git (Currently init,push and pull are supported)
 
 ### Diary
@@ -59,6 +59,6 @@ grom init <git_url>
 # pushing changes to your repo
 grom push <commit_message>
 
-# pullung changes from remote
+# pulling changes from remote
 grom pull
 ```
