@@ -62,3 +62,5 @@ grom push <commit_message>
 # pulling changes from remote
 grom pull
 ```
+## Changelog
+See [Changelog](/CHANGELOG.md)
