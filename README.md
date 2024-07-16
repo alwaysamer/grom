@@ -11,7 +11,7 @@ Currently, the only supported installation method is via crates.io using the fol
 cargo install grom
 ```
 ## Configuration
-Grom expects a 'grom.toml' file under $HOME/.config (currently only Mac and Linux are supported and tested so i don't know how Windows behaves).
+Grom expects a 'grom.toml' file under $HOME/.config/grom (currently only Mac and Linux are supported and tested so i don't know how Windows behaves).
 The contents of the file should look like this:
 ```toml
 # These values are the default
